@@ -15,10 +15,10 @@ open(outputFile, 'w').close()
 
 # Define the room numbers and associated LANs
 roomLans = OrderedDict([
-    ("ER", list(range(89, 118)) + [118, 119, 122, 125]),
+    ("ER", list(range(89, 122)) + [124, 125]),
     ("CTICU A", list(range(143, 153))),
     ("CTICU B", list(range(153, 163))),
-    ("ASU", list(range(69, 85))),
+    ("ASU", list(range(69, 86))),
     ("NSICU", list(range(171, 179))),
     ("MICU", [163, 164])
 ])
@@ -56,12 +56,15 @@ for area, lanList in roomLans.items():
 
         if pingResult != 0:
             # For 118, 122 and all the ips in MICU, specify as "Desks" not "Room Numbers"
-            if area == "MICU" or lan in [118, 119, 122, 125]:
+            if area == "MICU" or lan in [85, 118, 119, 120, 121, 122, 124, 125]:
                 identifier = "Desk"
             else:
                 identifier = "Room Number"
 
-            message = f"{identifier}: {roomNumber}, IP: {ipAddress}\n"
+            if identifier == "Desk":
+                message = f"{identifier}, IP: {ipAddress}\n"
+            else:
+                message = f"{identifier}: {roomNumber}, IP: {ipAddress}\n"
             with open(outputFile, 'a') as f:
                 f.write(message)
             allPrintersOnline = False
