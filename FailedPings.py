@@ -4,8 +4,10 @@ import requests
 import re
 from collections import OrderedDict
 
+# OMITTED ACTUAL IP ADDRESSES FOR SAFETY REASONS
+
 # Define the prefix
-prefix = "10.150.104."
+prefix = ""
 
 # Define the output file
 outputFile = "FailedPings.txt"
@@ -15,12 +17,12 @@ open(outputFile, 'w').close()
 
 # Define the room numbers and associated LANs
 roomLans = OrderedDict([
-    ("ER", list(range(89, 122)) + [124, 125]),
-    ("CTICU A", list(range(143, 153))),
-    ("CTICU B", list(range(153, 163))),
-    ("ASU", list(range(69, 86))),
-    ("NSICU", list(range(171, 179))),
-    ("MICU", [163, 164])
+    ("ER", list(range()) + []),
+    ("CTICU A", list(range())),
+    ("CTICU B", list(range())),
+    ("ASU", list(range()),
+    ("NSICU", list(range())),
+    ("MICU", [])
 ])
 
 # Function to get the battery health status of a printer with a given IP address
@@ -55,8 +57,8 @@ for area, lanList in roomLans.items():
         pingResult = subprocess.call(['ping', '-n', '1', ipAddress])
 
         if pingResult != 0:
-            # For 118, 122 and all the ips in MICU, specify as "Desks" not "Room Numbers"
-            if area == "MICU" or lan in [85, 118, 119, 120, 121, 122, 124, 125]:
+            # For all the ips in MICU, specify as "Desks" not "Room Numbers"
+            if area == "MICU" or lan in []:
                 identifier = "Desk"
             else:
                 identifier = "Room Number"
